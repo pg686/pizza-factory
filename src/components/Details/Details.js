@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import * as pizzaService from '../../services/pizzaService.js';
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext.js";
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 const Details = () => {
     const navigate = useNavigate();
     const { user }  = useContext(AuthContext);

@@ -10,8 +10,9 @@ import Create from "./components/Create";
 import Details from "./components/Details";
 import Logout from './components/Logout';
 import { AuthContext } from './contexts/AuthContext.js';
+import useLocalStorage from './hooks/useLocalStorage.js';
 function App() {
-const [user, setUser] = useState({accessToken: '', email: '', _id: ''});
+const [user, setUser] = useLocalStorage('user', {accessToken: '', email: '', _id: ''});
 
 
 
