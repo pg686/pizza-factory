@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import * as petService from '../../services/petService.js';
+import * as pizzaService from '../../services/pizzaService.js';
 import PizzaCard from "./PetCard/PizzaCard.js";
 const PizzaList = () => {
-   const [pets, setPets] = useState([]);
+   const [pizzas, setPizzas] = useState([]);
 
     useEffect(() => {
-        petService.getAll()
+        pizzaService.getAll()
         .then(result => {
-            setPets(result);
+            setPizzas(result);
         } );
-        console.log(pets);
+        console.log(pizzas);
     } , []);
 
     return (
         <div>
-            { pets.length > 0 ? (
+            { pizzas.length > 0 ? (
         <ul className="other-pets-list">
 
-{ pets.map( x =>  <PizzaCard key={x._id} pet={x} /> )}
+{ pizzas.map( x =>  <PizzaCard key={x._id} pizza={x} /> )}
         </ul> )
             :
-        <p className="no-pets">No pets in database!</p>
+        <p className="no-pets">No pizzas in database!</p>
     }
         </div>
     );

@@ -2,16 +2,16 @@
 import { Link } from 'react-router-dom';
 
 const PizzaCard = ({
-    pet
+    pizza
 }) => {
 
 
     return (
         <li className="otherPet">
-        <h3>Name: {pet.name}</h3>
-        <p>Type:  {pet.type}</p>
-        <p className="img"><img src={pet.imageUrl} /></p>
-        <Link className="button" to={`/details/${pet._id}`}>Details</Link>
+        <h3>Name: {pizza.name}</h3>
+        <p>Type:  {pizza.type}</p>
+        <p className="img"><img src={pizza.imageUrl} /></p>
+        <Link className="button" to={`/details/${pizza._id}`}>Details</Link>
     </li>
     );
 };

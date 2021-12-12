@@ -1,20 +1,28 @@
 import { useNavigate } from 'react-router-dom';
+import {useContext} from 'react';
 import * as authService from '../../services/authServices.js';
+import { AuthContext } from '../../contexts/AuthContext.js';
 
 const Login = () => {
+    const { login } = useContext(AuthContext);
 const navigate = useNavigate();
-    const onLogin = (e) => {
+    const onLoginHandler = (e) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
         let email = formData.get('email');
-        authService.login(email);;
-navigate('/');
+        let password = formData.get('password');
+        authService.login(email,password)
+        .then((authData) => {
+            login(authData);
+            navigate('/');
+        }).catch(err => console.log(err));
+       
 
     };
 
     return (
         <section id="login-page" className="login">
-        <form id="login-form" onSubmit={onLogin}>
+        <form id="login-form" onSubmit={onLoginHandler}>
             <fieldset>
                 <legend>Login Form</legend>
                 <p className="field">

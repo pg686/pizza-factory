@@ -1,41 +1,16 @@
-import * as petService from '../../services/petService.js';
+import * as pizzaService from '../../services/pizzaService.js';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext.js';
 const Create = () => {
+const { user }  = useContext(AuthContext);
 
-
-   const [types, setTypes] = useState([]);
-   const [categories, setCategories] = useState([]);
-    useEffect(() => {
-
-        fetch('https://softuni-test-server.herokuapp.com/jsonstore/types')
-.then(res => res.json())
-.then(res => {
-    let typesRes = Object.values(res);
-    let categories = typesRes.reduce((a , c) => {
-
-    if(!a[c.category]){
-        a[c.category]= [];
-    }
-    a[c.category].push(c);
-
-return a;
-    }, {});
-    console.log(categories);
-    setCategories(categories);  
-    setTypes(typesRes); });
-}
-, [] );
- 
-       
-
+  
 
     const navigate = useNavigate();
 
-    const onCategoryChange = (e) => {
-        setTypes(categories[e.target.value]);
-        console.log('ssad');
-    } ;
+
     const onPetCreate = (e) => {
 e.preventDefault();
         let formData = new FormData(e.currentTarget);
@@ -43,12 +18,12 @@ e.preventDefault();
         let description = formData.get('description');
         let imageUrl = formData.get('imageUrl');
         let type = formData.get('type');    
-        petService.create({
+        pizzaService.create({
             name,
             description,
             imageUrl,
             type    
-        }).then(res => {
+        }, user.accessToken).then(res => {
 navigate('/dashboard');
         } );
     };
@@ -75,19 +50,13 @@ navigate('/dashboard');
                         <input type="text" name="imageUrl" id="image" placeholder="Image"/>
                     </span>
                 </p>
-                <p className="field">
-                    <label htmlFor="type">Category</label>
-                    <span className="input">
-                        <select id="type" name="type"  onChange={onCategoryChange}>
-                         { Object.keys(categories).map(c => <option key={c} value={c} >{c}</option>)}
-                        </select>
-                    </span>
-                </p>
+
                 <p className="field">
                     <label htmlFor="type">Type</label>
                     <span className="input">
                         <select id="type" name="type">
-                         { types.map(type => <option key={type._id} value={type._id} >{type.name}</option>)}
+                        <option value="cats">Cats</option>)
+                    
                         </select>
                     </span>
                 </p>
@@ -98,3 +67,45 @@ navigate('/dashboard');
     );
 };
 export default Create;  
+
+//
+//<p className="field">
+//<label htmlFor="type">Category</label>
+//<span className="input">
+//    <select id="type" name="type"  onChange={onCategoryChange}>
+//     { Object.keys(categories).map(c => <option key={c} value={c} >{c}</option>)}
+//    </select>
+//</span>
+//</p>
+
+//     { types.map(type => <option key={type._id} value={type._id} >{type.name}</option>)}
+
+//const [types, setTypes] = useState([]);
+//const [categories, setCategories] = useState([]);
+// useEffect(() => {
+//
+//     fetch('https://softuni-test-server.herokuapp.com/jsonstore/types')
+//        .then(res => res.json())
+//       .then(res => {
+// let typesRes = Object.values(res);
+// let categories = typesRes.reduce((a , c) => {
+//
+// if(!a[c.category]){
+//     a[c.category]= [];
+// }
+// a[c.category].push(c);
+//
+//return a;
+// }, {});
+// console.log(categories);
+// setCategories(categories);  
+// setTypes(typesRes); });
+//}
+//, [] );
+
+//    const onCategoryChange = (e) => {
+//    setTypes(categories[e.target.value]);
+//    console.log('ssad');
+//} ;
+
+    

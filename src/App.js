@@ -9,48 +9,38 @@ import MyOrders from "./components/MyOrders";
 import Create from "./components/Create";
 import Details from "./components/Details";
 import Logout from './components/Logout';
+import { AuthContext } from './contexts/AuthContext.js';
 function App() {
-const [userInfo, setUserInfo] = useState({isAuthenticated: false, username: ''});
-
-useEffect(() => {
-let username= authService.getUser();
-setUserInfo({
-  isAuthenticated: Boolean(username),
-  username
-});
-}, []);
+const [user, setUser] = useState({accessToken: '', email: '', _id: ''});
 
 
 
-const onLogin   = (username) => {
-setUserInfo({
-  isAuthenticated: true,
-  username
-});
+
+
+const login   = (authData) => {
+setUser(authData);
 };
 
 
 const onLogout   = () => {
-  setUserInfo({
-    isAuthenticated: false,
-    username: []
-  });
+//
   };
 
   return (
+    <AuthContext.Provider value={{user, login}}>
 <div id="container">
         
-<Header {...userInfo} />
+<Header />
     
         <main id="site-content">
         <Routes>
 <Route path="/dashboard/*" element={<Dashboard />} />
-<Route path="/login" element={<Login />} />
+<Route path="/login" element={<Login/>} />
 <Route path="/register" element={<Register />} />
 <Route path="/my-orders" element={<MyOrders />} />
 <Route path="/create" element={<Create />} />
-<Route path="/details/:petId" element={<Details />} />
-<Route path="logout" element={<Logout onLogout={onLogout} />} />
+<Route path="/details/:pizzaId" element={<Details />} />
+<Route path="logout" element={<Logout />} />
 </Routes>          
           
           
@@ -66,6 +56,7 @@ const onLogout   = () => {
         </footer>
 
     </div>
+    </AuthContext.Provider>
   );
 }
 

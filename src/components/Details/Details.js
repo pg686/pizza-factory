@@ -1,47 +1,62 @@
 import { useParams } from "react-router";
-import * as petService from '../../services/petService.js';
-import { useState, useEffect } from "react";
+import * as pizzaService from '../../services/pizzaService.js';
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext.js";
+import { useNavigate, Link } from 'react-router';
 const Details = () => {
-    const { petId } = useParams();
-const [pet ,setPet] = useState({});
+    const navigate = useNavigate();
+    const { user }  = useContext(AuthContext);
+    const { pizzaId } = useParams();
+const [pizza ,setPizza] = useState({});
 
 useEffect(() => {
-    petService.getOne(petId)
+    pizzaService.getOne(pizzaId)
     .then(result => {
-        setPet(result);
+        setPizza(result);
     } );
-    console.log(pet);
+    
 } , []);
-
-
+console.log(pizza);
+const deleteHandler = (e) => {
+    e.preventDefault();
+pizzaService.remove(pizzaId, user.accessToken)
+.then(() => navigate('/dashboard'));
+};
+const ownerButtons =  ( 
+<><Link className="button" to="edit">Edit</Link>
+<a className="button" onClick={deleteHandler}>Delete</a></> );
+const userButton = <a className="button" href="#">Like</a>;
     return (
         <section id="details-page" className="details">
         <div className="pet-information">
-            <h3>Name: {pet.name} </h3>
-            <p className="type">Type: {pet.type}</p>
-            <p className="img"><img src={pet.imageUrl}/></p>
+            <h3>Name: {pizza.name} </h3>
+            <p className="type">Type: {pizza.type}</p>
+            <p className="img"><img src={pizza.imageUrl}/></p>
             <div className="actions">
+                {user._id && (user._id === pizza._ownerId ? ownerButtons
+                : userButton )}
+
                 
-                <a className="button" href="#">Edit</a>
-                <a className="button" href="#">Delete</a>
                 
                 
                 
-                <a className="button" href="#">Like</a>
                 
                 
                 <div className="likes">
                     <img className="hearts" src="/images/heart.png" />
-                    <span id="total-likes">Likes: {pet.likes}</span>
+                    <span id="total-likes">Likes: {pizza.likes}</span>
                 </div>
                 
             </div>
         </div>
         <div className="pet-description">
             <h3>Description:</h3>
-            <p>{pet.description}</p>
+            <p>{pizza.description}</p>
         </div>
     </section>
     );
 };
 export default Details;  
+
+
+//{pizza.likes.length}
