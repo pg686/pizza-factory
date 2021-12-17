@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
+
 const Header = ({
    email
 }) => {
@@ -13,7 +14,7 @@ const Header = ({
 
 let userNavigation = (<div id="user">
 <span>Welcome, {user.email}</span>
-<Link className="button" to="/my-pets">My Orders</Link>
+<Link className="button" to="/my-orders">My Orders</Link>
 <Link className="button" to="/create">Make your own pizza</Link>
 <Link className="button" to="/logout">Logout</Link>
 </div>);

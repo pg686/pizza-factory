@@ -1,18 +1,20 @@
 
 import { Link } from 'react-router-dom';
-
+import { Card } from 'react-bootstrap';
 const PizzaCard = ({
     pizza
 }) => {
 
 
     return (
-        <li className="otherPet">
-        <h3>Name: {pizza.name}</h3>
+    <div class="card">
+  <h3>Name: {pizza.name}</h3>
         <p>Type:  {pizza.type}</p>
+        <p>Price:  {pizza.price} $</p>
         <p className="img"><img src={pizza.imageUrl} /></p>
         <Link className="button" to={`/details/${pizza._id}`}>Details</Link>
-    </li>
+</div>
+  
     );
 };
 export default PizzaCard;

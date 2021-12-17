@@ -3,26 +3,87 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
+import { InputGroup } from 'react-bootstrap';
+
 const Create = () => {
 const { user }  = useContext(AuthContext);
+const [product, setProduct] = useState([]);
+const [pizzaType, setPizzaType] = useState('');
+const [price, setPrice] = useState(0);
+const [description, setDescription] = useState(' ');
+ useEffect(() => {
 
+     fetch('http://localhost:3030/data/ingredients')
+        .then(res => res.json())
+       .then(res => {
+        let typesRes = Object.values(res);
+ 
+ console.log(res);  
+
+ setProduct(typesRes)
+ });
+}
+, [] );
   
 
     const navigate = useNavigate();
+const onProductChange = (e) => {
+
+let newArr = [...product];
+let index = newArr.findIndex(el => el.name == e.target.value);
+newArr[index].isChecked = e.target.checked;
+let currentPrice = newArr[index].price; 
+let currentname = newArr[index].name; 
+let newPrice = price;
+let descr = description.split(' ');
+if(e.target.checked === true) {
+     newPrice += currentPrice 
+    descr.push(e.target.value);
+}else{
+    newPrice -= currentPrice;
+    if(descr.includes(currentname)){
+let currentIndex = descr.findIndex(el => el== currentname)
+        descr.splice(currentIndex, 1);
+    }
+
+}
+setDescription(descr.join(' '))
+setPrice(newPrice);
+setProduct(newArr);
+
+let newArrr = product.reduce((a,c) => {
+    if(c.isChecked && !a.includes(c.type)){
+a.push(c.type);
+    }
+    return a;
+}, []);
+console.log(newArrr);
+if(newArrr.includes('meat') ){
+    setPizzaType('meat')
+}else if(newArrr.includes('vegetarian')){
+    setPizzaType('vegetarian')
+}else{
+    setPizzaType('vegan')
+}
+console.log(product)
+}
 
 
     const onPetCreate = (e) => {
 e.preventDefault();
         let formData = new FormData(e.currentTarget);
         let name = formData.get('name');
-        let description = formData.get('description');
+        
         let imageUrl = formData.get('imageUrl');
-        let type = formData.get('type');    
+        let type = pizzaType;    
         pizzaService.create({
             name,
             description,
             imageUrl,
-            type    
+            type,
+            price,
+            product
+            
         }, user.accessToken).then(res => {
 navigate('/dashboard');
         } );
@@ -40,28 +101,41 @@ navigate('/dashboard');
                 </p>
                 <p className="field">
                     <label htmlFor="description">Description</label>
-                    <span className="input">
-                        <textarea name="description" id="description" placeholder="Description"></textarea>
-                    </span>
+                    <p>{description}</p>
                 </p>
+            
                 <p className="field">
                     <label htmlFor="image">Image</label>
                     <span className="input">
                         <input type="text" name="imageUrl" id="image" placeholder="Image"/>
                     </span>
                 </p>
+                <p className="field">
+
+    <div>
+        <label >
+     { Object.values(product).map(c => <p><input type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
+     </label>
+    </div>
+
+</p>
+<p className="field">
+
+</p>
+
 
                 <p className="field">
-                    <label htmlFor="type">Type</label>
-                    <span className="input">
-                        <select id="type" name="type">
-                        <option value="cats">Cats</option>)
-                    
-                        </select>
-                    </span>
+                    <label htmlFor="type" name="type">Type</label>
+                  {pizzaType}
+                </p>
+
+                <p className="field">
+                    <label htmlFor="type" name="price">Price</label>
+                  {price}
                 </p>
                 <input className="button submit" type="submit" value="Add Pet"/>
             </fieldset>
+            
         </form>
     </section>
     );

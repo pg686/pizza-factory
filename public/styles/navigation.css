@@ -43,13 +43,13 @@ nav.navbar ul li a {
   border-radius: 0.4rem;
   text-decoration: none;
   font-weight: bold;
-  background: cadetblue;
+  background: rgb(101, 95, 160);
   color: rgb(255, 255, 255);
 }
 .button:hover,
 nav.navbar ul li a:hover,
 nav.navbar ul li:hover > a {
-  background: rgb(248, 215, 107);
+  background: rgb(107, 248, 126);
   color: rgb(0, 0, 0);
   font-weight: bold;
 }

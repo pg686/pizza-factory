@@ -7,17 +7,17 @@ const [state, setState] = useState(() => {
     let item = localStorage.getItem(key);
     return item ? JSON.parse(item)
     : initialValue;
-    }catch(err){
+    } catch(err){
         console.log(err);
         return initialValue;
     }
 });
 
 const setItem = (value) => {
-    try{
+    try {
         localStorage.setItem(key,JSON.stringify(value));
         setState(value);
-    }catch(err){
+    } catch(err){
 console.log(err);
     }
 };
@@ -26,6 +26,6 @@ return [
     setItem 
 ];
 
-} ;
+};
 
 export default useLocalStorage;

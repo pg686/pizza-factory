@@ -25,7 +25,8 @@ pizzaService.remove(pizzaId, user.accessToken)
 const ownerButtons =  ( 
 <><Link className="button" to="edit">Edit</Link>
 <a className="button" onClick={deleteHandler}>Delete</a></> );
-const userButton = <a className="button" href="#">Like</a>;
+const userButton =<a className="button" href="#">Like</a>
+
     return (
         <section id="details-page" className="details">
         <div className="pet-information">
@@ -35,7 +36,7 @@ const userButton = <a className="button" href="#">Like</a>;
             <div className="actions">
                 {user._id && (user._id === pizza._ownerId ? ownerButtons
                 : userButton )}
-
+<Link className="button" to="/my-orders">Order</Link>
                 
                 
                 
@@ -46,7 +47,10 @@ const userButton = <a className="button" href="#">Like</a>;
                     <img className="hearts" src="/images/heart.png" />
                     <span id="total-likes">Likes: {pizza.likes}</span>
                 </div>
-                
+                <div className="price">
+                    <img className="hearts" src="/images/heart.png" />
+                    <span id="total-likes">Price: {pizza.price} </span>
+                </div>
             </div>
         </div>
         <div className="pet-description">

@@ -11,8 +11,9 @@ import Details from "./components/Details";
 import Logout from './components/Logout';
 import { AuthContext } from './contexts/AuthContext.js';
 import useLocalStorage from './hooks/useLocalStorage.js';
+const initialAuthState = {accessToken: '', email: '', _id: ''};
 function App() {
-const [user, setUser] = useLocalStorage('user', {accessToken: '', email: '', _id: ''});
+const [user, setUser] = useLocalStorage('user', initialAuthState);
 
 
 
@@ -23,12 +24,12 @@ setUser(authData);
 };
 
 
-const onLogout   = () => {
-//
+const logout   = () => {
+setUser(initialAuthState);
   };
 
   return (
-    <AuthContext.Provider value={{user, login}}>
+    <AuthContext.Provider value={{user, login, logout}}>
 <div id="container">
         
 <Header />

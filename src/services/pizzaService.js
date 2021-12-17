@@ -4,7 +4,8 @@ let baseUrl = 'http://localhost:3030/data';
 export const getAll = async () => {
   let response = await fetch(`${baseUrl}/pizza`);
   let pizzas = await response.json();
-  let result = Object.values(pizzas);
+  console.log(pizzas);
+  let result =  Object.values(pizzas);
   return result;
 };
 export const create = async (pizzaData, token) => {
