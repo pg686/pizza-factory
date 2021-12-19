@@ -9,27 +9,14 @@ import MyOrders from "./components/MyOrders";
 import Create from "./components/Create";
 import Details from "./components/Details";
 import Logout from './components/Logout';
-import { AuthContext } from './contexts/AuthContext.js';
+import { AuthProvider } from './contexts/AuthContext.js';
 import useLocalStorage from './hooks/useLocalStorage.js';
-const initialAuthState = {accessToken: '', email: '', _id: ''};
+import Edit from './components/Edit/Edit.js';
 function App() {
-const [user, setUser] = useLocalStorage('user', initialAuthState);
 
-
-
-
-
-const login   = (authData) => {
-setUser(authData);
-};
-
-
-const logout   = () => {
-setUser(initialAuthState);
-  };
 
   return (
-    <AuthContext.Provider value={{user, login, logout}}>
+  <AuthProvider>
 <div id="container">
         
 <Header />
@@ -43,6 +30,8 @@ setUser(initialAuthState);
 <Route path="/create" element={<Create />} />
 <Route path="/details/:pizzaId" element={<Details />} />
 <Route path="logout" element={<Logout />} />
+<Route path="edit/:pizzaId" element={<Edit />} />
+
 </Routes>          
           
           
@@ -58,7 +47,7 @@ setUser(initialAuthState);
         </footer>
 
     </div>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
 

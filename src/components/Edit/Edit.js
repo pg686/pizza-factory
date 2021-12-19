@@ -1,41 +1,135 @@
+import * as pizzaService from '../../services/pizzaService.js';
+import usePizzaState from '../../hooks/usePizzaState.js';
+import { useParams } from 'react-router';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import usePizzaProducts from '../../hooks/usePizzaProducts.js';
 const Edit = () => {
+const {pizzaId} = useParams();
+
+const [pizza,setPizza] = usePizzaState(pizzaId);
+const [product, setProduct] =  usePizzaProducts(pizzaId);
+
+
+const navigate = useNavigate();
+
+let newProdd = {...pizza.product};
+const pizzaEditSubmitHandler = (e) => {
+
+        e.preventDefault();
+                let formData = new FormData(e.currentTarget);
+                let name = formData.get('name');
+                
+                let imageUrl = formData.get('imageUrl');
+                //let type = pizza.type;    
+                pizzaService.update(pizzaId,{
+                    name,
+                    description: pizza.description,
+                    imageUrl,
+                    type: pizza.type,
+                    price: pizza.price,
+                    product: pizza.product
+                    
+                }).then(res => {
+       
+                    navigate('/dashboard');
+                } );
+            };
+
+
+
+const onProductChange = (e) => {
+    let newArr = [...product];
+    let index = newArr.findIndex(el => el.name == e.target.value);
+    newArr[index].isChecked = e.target.checked;
+    let currentPrice = newArr[index].price; 
+    let currentname = newArr[index].name; 
+    let newPrice = pizza.price;
+    let descr =pizza.description.length >1 ?  pizza.description.split(', ') : [];
+    console.log(descr)
+    if(e.target.checked === true) {
+         newPrice += currentPrice 
+        descr.push(e.target.value);
+    }else{
+        newPrice -= currentPrice;
+        if(descr.includes(currentname)){
+    let currentIndex = descr.findIndex(el => el== currentname)
+    
+            descr.splice(currentIndex, 1);
+        }
+    }
+    setProduct(newArr);
+    let newArrr = product.reduce((a,c) => {
+        if(c.isChecked && !a.includes(c.type)){
+    a.push(c.type);
+        }
+        return a;
+    }, []);
+    let newType =''
+    if(newArrr.includes('meat') ){
+        newType = 'meat';
+    }else if(newArrr.includes('vegetarian')){
+        newType = 'vegetarian';
+    }else{
+        newType = 'vegan';
+    }
+   setPizza(prev => ({
+    ...prev,
+    description: descr.join(', '),
+    price: newPrice,
+    type: newType,
+    product: product
+})
+)
+console.log(pizza.description)
+    }
+    
     return (
         <section id="edit-page" className="edit">
-        <form id="edit-form" action="#" method="">
+        <form id="edit-form" onSubmit={pizzaEditSubmitHandler}>
             <fieldset>
                 <legend>Edit my Pet</legend>
                 <p className="field">
                     <label htmlFor="name">Name</label>
                     <span className="input">
-                        <input type="text" name="name" id="name" value="Milo" />
+                        <input type="text" name="name" id="name" placeholder="Name" defaultValue={pizza.name}/>
                     </span>
                 </p>
                 <p className="field">
                     <label htmlFor="description">Description</label>
-                    <span className="input">
-                        <textarea name="description"
-                            id="description">Today, some dogs are used as pets, others are used to help humans do their work. They are a popular pet because they are usually playful, friendly, loyal and listen to humans. Thirty million dogs in the United States are registered as pets.[5] Dogs eat both meat and vegetables, often mixed together and sold in stores as dog food. Dogs often have jobs, including as police dogs, army dogs, assistance dogs, fire dogs, messenger dogs, hunting dogs, herding dogs, or rescue dogs.</textarea>
-                    </span>
+                    <p>{pizza.description}</p>
                 </p>
+            
                 <p className="field">
                     <label htmlFor="image">Image</label>
                     <span className="input">
-                        <input type="text" name="imageUrl" id="image" value="/images/dog.png" />
+                        <input type="text" name="imageUrl" id="image" placeholder="Image" defaultValue={pizza.imageUrl}/>
                     </span>
                 </p>
+        
+
+    <div>
+        <label >
+    {Object.values(product).map(c => <p><input type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
+     </label>
+    </div>
+
+
+<p className="field">
+
+</p>
+
+
                 <p className="field">
-                    <label htmlFor="type">Type</label>
-                    <span className="input">
-                        <select id="type" name="type" value="dog">
-                            <option value="cat" >Cat</option>
-                            <option value="dog" selected>Dog</option>
-                            <option value="parrot">Parrot</option>
-                            <option value="reptile">Reptile</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </span>
+                    <label htmlFor="type" name="type">Type</label>
+                  {pizza.type}
                 </p>
-                <input className="button submit" type="submit" value="Save" />
+
+                <p className="field">
+                    <label htmlFor="type" name="price">Price</label>
+                  {pizza.price}
+                </p>
+                <input className="button submit" type="submit" value="Save"  />
             </fieldset>
         </form>
     </section>

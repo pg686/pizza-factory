@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import { InputGroup } from 'react-bootstrap';
-
+import { useAuthContext } from '../../contexts/AuthContext.js';
 const Create = () => {
-const { user }  = useContext(AuthContext);
+const { user }  = useAuthContext();
 const [product, setProduct] = useState([]);
 const [pizzaType, setPizzaType] = useState('');
 const [price, setPrice] = useState(0);
-const [description, setDescription] = useState(' ');
+const [description, setDescription] = useState([]);
  useEffect(() => {
 
      fetch('http://localhost:3030/data/ingredients')
@@ -35,7 +35,7 @@ newArr[index].isChecked = e.target.checked;
 let currentPrice = newArr[index].price; 
 let currentname = newArr[index].name; 
 let newPrice = price;
-let descr = description.split(' ');
+let descr =description.length >1 ?  description.split(', ') : [];
 if(e.target.checked === true) {
      newPrice += currentPrice 
     descr.push(e.target.value);
@@ -47,7 +47,7 @@ let currentIndex = descr.findIndex(el => el== currentname)
     }
 
 }
-setDescription(descr.join(' '))
+setDescription(descr.join(', '))
 setPrice(newPrice);
 setProduct(newArr);
 

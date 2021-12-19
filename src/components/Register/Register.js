@@ -1,10 +1,11 @@
 import { AuthContext } from '../../contexts/AuthContext.js';
 import * as authService from '../../services/authServices.js';
 import { useNavigate } from 'react-router';
+import { useAuthContext } from '../../contexts/AuthContext.js';
 import {useContext} from 'react';
 const Register = () => {
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    const { login } = useAuthContext();
     const registerSubmitHandler = (e) => {
         e.preventDefault();
         let {email, password} = Object.fromEntries(new FormData(e.currentTarget));
