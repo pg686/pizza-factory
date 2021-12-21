@@ -58,7 +58,7 @@ const userButton =<a className="button" href="#">Like</a>
             <div className="actions">
                 {user._id && (user._id === pizza._ownerId ? ownerButtons
                 : userButton )}
-<Link className="button" to="/my-orders">Order</Link>
+
                 
                 
                 
@@ -87,3 +87,6 @@ export default Details;
 
 
 //{pizza.likes.length}
+
+
+//<Link className="button" to="/my-orders">Order</Link>

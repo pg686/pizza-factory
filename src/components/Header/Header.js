@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import { useAuthContext } from '../../contexts/AuthContext.js';
 //import CartContext from '../../contexts/card/CardContext.js';
-
 const Header = ({
    email
 }) => {
@@ -16,7 +15,7 @@ const Header = ({
 
 let userNavigation = (<div id="user">
 <span>Welcome, {user.email}</span>
-<Link className="button" to="/my-orders">My Orders</Link>
+<Link className="button" to="/my-pizzas">My Pizzas</Link>
 <Link className="button" to="/create">Make your own pizza</Link>
 <Link className="button" to="/logout">Logout</Link>
 </div>

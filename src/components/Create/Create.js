@@ -5,12 +5,14 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import { InputGroup } from 'react-bootstrap';
 import { useAuthContext } from '../../contexts/AuthContext.js';
+import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
 const Create = () => {
 const { user }  = useAuthContext();
 const [product, setProduct] = useState([]);
 const [pizzaType, setPizzaType] = useState('');
 const [price, setPrice] = useState(0);
 const [description, setDescription] = useState([]);
+const { addNotification } = useNotificationContext();
  useEffect(() => {
 
      fetch('http://localhost:3030/data/ingredients')
@@ -85,6 +87,7 @@ e.preventDefault();
             product
             
         }, user.accessToken).then(res => {
+            addNotification("success", types.success)
 navigate('/dashboard');
         } );
     };

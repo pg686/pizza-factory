@@ -1,47 +1,43 @@
 import { useEffect, useState } from "react";
 import * as pizzaService from '../../services/pizzaService.js';
 import PizzaCard from "./PetCard/PizzaCard.js";
-const PizzaList = ({filterPizza}) => {
-  
-   const [sortPizza, setSortPizza] = useState([]);
-   
-    useEffect(() => {
-        pizzaService.getAll()
-        .then(result => {
+const PizzaList = ({
+    pizzas,
+    onSort
+}) => {
+let getPizzas = [...pizzas]
+   const [sortPizza, setSortPizza] = useState(getPizzas);
 
-            setSortPizza(result.sort((a,b) => a.price - b.price))
-              
-        
-        } ).catch(err=> console.log('err'));
-        console.log(sortPizza);
-    } , []);
-    const pizzasSort = (pizzas) => {
-        return {
-            'descending-likes': () => pizzas.sort((a, b) => b.likes - a.likes),
-            'ascending-likes': () => pizzas.sort((a, b) =>  a.likes - b.likes),
-            'descending-price': () => pizzas.sort((a, b) => b.price - a.price),
-            'ascending-price': () => pizzas.sort((a, b) => a.price - b.price),
-        }
-    }
-    const onSortButton = (sortBy) => {
-        const sorter = pizzasSort(sortPizza);
-        const sortedPizzas = sorter[sortBy]();
+   const [state, setState] = useState('All');
+
+
+
+const onClick = (e) => {
+    setState(e.target.textContent);
+}
     
-        setSortPizza([...sortedPizzas]);
-        
-    }
+
   
 
     return (
         <div>
-<button type="button" className="btn btn-primary" onClick={() => onSortButton('descending-likes')}>descending likes</button>
-<button type="button" className="btn btn-primary" onClick={() => onSortButton('ascending-likes')}>ascending likes</button>
-<button type="button" className="btn btn-primary" onClick={() => onSortButton('descending-price')}>descending price</button>
-<button type="button" className="btn btn-primary" onClick={() => onSortButton('ascending-price')}>ascending price</button>
-            { sortPizza.length > 0 ? (
+                    <nav>
+
+<button type="button" className="btn btn-primary" onClick={onClick}>All</button>
+<button type="button" className="btn btn-primary" onClick={onClick}>meat</button>
+<button type="button" className="btn btn-primary" onClick={onClick}>vegetarian</button>
+<button type="button" className="btn btn-primary" onClick={onClick}>vegan</button>
+
+
+        </nav>
+<button type="button" className="btn btn-primary" onClick={onSort}>descending likes</button>
+<button type="button" className="btn btn-primary" onClick={onSort}>ascending likes</button>
+<button type="button" className="btn btn-primary" onClick={onSort}>descending price</button>
+<button type="button" className="btn btn-primary" onClick={onSort}>ascending price</button>
+            { pizzas.length > 0 ? (
         <ul className="other-pets-list">
-{ filterPizza !== 'All' ?  sortPizza.filter(x => x.type === filterPizza).map( x =>  <PizzaCard key={x._id} pizza={x} /> ) :
- sortPizza.map( x =>  <PizzaCard key={x._id} pizza={x} /> )}
+{ state !== 'All' ?  pizzas.filter(x => x.type === state).map( x =>  <PizzaCard key={x._id} getPizza={x} /> ) :
+ pizzas.map( x =>  <PizzaCard key={x._id} getPizza={x} /> )}
         </ul> )
             :
         <p className="no-pets">No pizzas in database!</p>

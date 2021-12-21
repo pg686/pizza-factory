@@ -3,13 +3,16 @@ import * as request from "./requester.js";
 //let baseUrl = 'https://softuni-test-server.herokuapp.com/jsonstore';
 let baseUrl = 'http://localhost:3030/data';
 
-export const getAll = async () => {
-  return request.get(`${baseUrl}/pizza`);
- // let pizzas = await response.json();
- // console.log(pizzas);
- // let result =  Object.values(pizzas);
- // return result;
+
+
+export const getAll = () => request.get(`${baseUrl}/pizza`);
+
+export const getMyPizzas = (ownerId) => {
+    let query = encodeURIComponent(`_ownerId="${ownerId}"`);
+
+    return request.get(`${baseUrl}/pizza?where=${query}`);
 };
+
 export const create = async (pizzaData, token) => {
     let response = await fetch(`${baseUrl}/pizza`, {
         method: 'POST',
