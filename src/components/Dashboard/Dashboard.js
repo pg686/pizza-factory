@@ -3,9 +3,11 @@ import { Routes,  Route, Link } from "react-router-dom";
 import PizzaList from "../PizzaList/PizzaList.js";
 import Button from "@restart/ui/esm/Button";
 import * as pizzaService from '../../services/pizzaService.js';
+import * as likeService from '../../services/likeService.js';
 import { useState,useEffect } from "react";
 const Dashboard = () => {
 const [pizza,setPizza]=useState([]);
+const [idLikes , setIdLikes] = useState([]);
     useEffect(() => {
         pizzaService.getAll()
         .then(result => {
@@ -16,10 +18,12 @@ const [pizza,setPizza]=useState([]);
         } ).catch(err=> console.log('err'));
       
     } , []);
+
+ 
     const pizzasSort = (pizzas) => {
         return {
- 'descending likes' : () => pizzas.sort((a, b) => b.likes - a.likes),
- 'ascending likes'  : () => pizzas.sort((a, b) =>  a.likes - b.likes),
+ 'descending products' : () => pizzas.sort((a, b) => b.numberOfProducts - a.numberOfProducts ),
+ 'ascending products'  : () => pizzas.sort((a, b) => a.numberOfProducts -b.numberOfProducts),
  'descending price' : () => pizzas.sort((a, b) => b.price - a.price),
  'ascending price'  : () => pizzas.sort((a, b) => a.price - b.price),
         }

@@ -5,11 +5,15 @@ import { AuthContext } from "../../contexts/AuthContext.js";
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthContext } from "../../contexts/AuthContext.js";
 import ModalDialog from "../Shared/Modal/ModalDialog.js";
+import * as likeService from '../../services/likeService';
+import { Button } from "react-bootstrap";
+import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
 const Details = () => {
     const navigate = useNavigate();
     const { user }  =useAuthContext();
     const { pizzaId } = useParams();
 const [pizza ,setPizza] = useState({});
+const { addNotification } = useNotificationContext();
 const [showDel, setShowDel] = useState(false);
 
 useEffect(() => {
@@ -19,12 +23,21 @@ useEffect(() => {
     } );
     
 } , []);
+
+
+useEffect(() => {
+    likeService.getPizzaLikes(pizzaId)
+        .then(likes => {
+            setPizza(state => ({...state, likes}))
+        })
+}, []);
 console.log(pizza);
 const deleteHandler = (e) => {
     e.preventDefault();
 pizzaService.remove(pizzaId, user.accessToken)
 .then(() => {
     setShowDel(false);
+    addNotification(`You successfully deleted ${pizza.name}`, types.success)
     navigate('/dashboard')});
 };
 
@@ -33,23 +46,32 @@ e.preventDefault();
 setShowDel(true);
 }
 
-const likeButton = () => {
-//   pizzaService.like(pizza._id, user._id)
-//   .then(likeCount => {
-//       setPizza(state=> ({
-//           ...state,
-//           likes:likeCount
-//       }))
-//   })
-}
+
+const likeButtonClick = () => {
+    if (user._id === pizza._ownerId) {
+        return;
+    }
+
+    if (pizza.likes.includes(user._id)) {
+        //addNotification('You cannot like again')
+        return;
+    }
+
+    likeService.like(user._id, pizzaId)
+        .then(() => {
+            setPizza(state => ({...state, likes: [...state.likes, user._id]}));
+
+           // addNotification('Successfuly liked a cat :)', types.success);
+        });
+};
 const ownerButtons =  ( 
 <><Link className="button" to={`/edit/${pizzaId}`}>Edit</Link>
 <a className="button" onClick={deleteClickHandler}>Delete</a></> );
-const userButton =<a className="button" href="#">Like</a>
+const userButton = <Button className="button"  onClick={likeButtonClick}  disabled={pizza.likes?.includes(user._id)}>Like</Button>
 
     return (
         <>
-        <ModalDialog show={showDel} onClose={() => setShowDel(false)} onSave={deleteHandler}></ModalDialog>
+        <ModalDialog show={showDel} onClose={() => setShowDel(false)} onSave={deleteHandler} ></ModalDialog>
         <section id="details-page" className="details">
         <div className="pet-information">
             <h3>Name: {pizza.name} </h3>
@@ -66,11 +88,11 @@ const userButton =<a className="button" href="#">Like</a>
                 
                 
                 <div className="likes">
-                    <img className="hearts" src="/images/heart.png" />
-                    <span id="total-likes">Likes: {pizza.likes}</span>
+                    <img className="like" src="/images/like.png" />
+                    <span id="total-likes">Likes: {pizza.likes?.length}</span>
                 </div>
                 <div className="price">
-                    <img className="hearts" src="/images/heart.png" />
+                    <img className="like" src="/images/price.png" />
                     <span id="total-likes">Price: {pizza.price} </span>
                 </div>
             </div>

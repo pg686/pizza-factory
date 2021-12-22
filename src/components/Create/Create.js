@@ -6,7 +6,12 @@ import { AuthContext } from '../../contexts/AuthContext.js';
 import { InputGroup } from 'react-bootstrap';
 import { useAuthContext } from '../../contexts/AuthContext.js';
 import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
+import { validatePizza } from '../../HelperValidate/validate.js';
+import { Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import './Create.css';
 const Create = () => {
+    const [errors, setErrors] = useState({});
 const { user }  = useAuthContext();
 const [product, setProduct] = useState([]);
 const [pizzaType, setPizzaType] = useState('');
@@ -71,20 +76,32 @@ console.log(product)
 }
 
 
-    const onPetCreate = (e) => {
+    const onPizzaCreate = (e) => {
 e.preventDefault();
         let formData = new FormData(e.currentTarget);
         let name = formData.get('name');
         
         let imageUrl = formData.get('imageUrl');
-        let type = pizzaType;    
+        let type = pizzaType;
+        let  numberOfProducts = product.filter(el=> el.isChecked=== true).length;
+        const validationErrors = validatePizza(
+            name,
+            imageUrl,
+            numberOfProducts
+		);
+        if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			return;
+		}
         pizzaService.create({
             name,
             description,
             imageUrl,
             type,
             price,
-            product
+            product,
+            numberOfProducts,
+            likes: []
             
         }, user.accessToken).then(res => {
             addNotification("success", types.success)
@@ -92,97 +109,64 @@ navigate('/dashboard');
         } );
     };
     return (
-        <section id="create-page" className="create">
-        <form id="create-form" onSubmit={onPetCreate}>
-            <fieldset>
-                <legend>Add new Pet</legend>
-                <p className="field">
-                    <label htmlFor="name">Name</label>
-                    <span className="input">
-                        <input type="text" name="name" id="name" placeholder="Name"/>
-                    </span>
-                </p>
-                <p className="field">
-                    <label htmlFor="description">Description</label>
-                    <p>{description}</p>
-                </p>
-            
-                <p className="field">
-                    <label htmlFor="image">Image</label>
-                    <span className="input">
-                        <input type="text" name="imageUrl" id="image" placeholder="Image"/>
-                    </span>
-                </p>
-                <p className="field">
+<section  className="wrapper">
+<form onSubmit={onPizzaCreate}>
+    <fieldset>
+        <legend>Add new Pizza</legend>
+        <p className="field">
+            <label htmlFor="name">Name</label>
+            <span className="input">
+                <input type="text" name="name" id="name" placeholder="Name"/>
+            </span>
+        </p>
+        {errors.name && (
+                <span className="form-error">{errors.name}</span>
+            )}
+        <p className="field">
+            <label htmlFor="description">Description</label>
+            <p>{description}</p>
+        </p>
+    
+        <p className="field">
+            <label htmlFor="image">Image</label>
+            <span className="input">
+                <input type="text" name="imageUrl" id="image" placeholder="Image"/>
+            </span>
+        </p>
+        {errors.imageUrl && (
+                <span className="form-error">{errors.imageUrl}</span>
+            )}
+           
+       <Form.Group className="mb-3 actions" controlId="formBasicCheckbox">
+  { Object.values(product).map(c => <p><Form.Check type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
+  </Form.Group>
 
-    <div>
-        <label >
-     { Object.values(product).map(c => <p><input type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
-     </label>
-    </div>
-
-</p>
+{errors.numberOfProducts && (
+                <span className="form-error">{errors.numberOfProducts}</span>
+            )}
 <p className="field">
 
 </p>
 
 
-                <p className="field">
-                    <label htmlFor="type" name="type">Type</label>
-                  {pizzaType}
-                </p>
+        <p className="field">
+            <label htmlFor="type" name="type">Type</label>
+          {pizzaType}
+        </p>
 
-                <p className="field">
-                    <label htmlFor="type" name="price">Price</label>
-                  {price}
-                </p>
-                <input className="button submit" type="submit" value="Add Pet"/>
-            </fieldset>
-            
-        </form>
-    </section>
+        <p className="field">
+            <label htmlFor="type" name="price">Price</label>
+          {price}
+        </p>
+        <input className="button submit" type="submit" value="Add Pizza"/>
+    </fieldset>
+    
+</form>
+</section>
+      
     );
 };
 export default Create;  
 
-//
-//<p className="field">
-//<label htmlFor="type">Category</label>
-//<span className="input">
-//    <select id="type" name="type"  onChange={onCategoryChange}>
-//     { Object.keys(categories).map(c => <option key={c} value={c} >{c}</option>)}
-//    </select>
-//</span>
-//</p>
-
-//     { types.map(type => <option key={type._id} value={type._id} >{type.name}</option>)}
-
-//const [types, setTypes] = useState([]);
-//const [categories, setCategories] = useState([]);
-// useEffect(() => {
-//
-//     fetch('https://softuni-test-server.herokuapp.com/jsonstore/types')
-//        .then(res => res.json())
-//       .then(res => {
-// let typesRes = Object.values(res);
-// let categories = typesRes.reduce((a , c) => {
-//
-// if(!a[c.category]){
-//     a[c.category]= [];
-// }
-// a[c.category].push(c);
-//
-//return a;
-// }, {});
-// console.log(categories);
-// setCategories(categories);  
-// setTypes(typesRes); });
-//}
-//, [] );
-
-//    const onCategoryChange = (e) => {
-//    setTypes(categories[e.target.value]);
-//    console.log('ssad');
-//} ;
 
     

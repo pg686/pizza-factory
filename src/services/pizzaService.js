@@ -30,8 +30,8 @@ export const create = async (pizzaData, token) => {
 export const update = async (pizzaId, pizzaData) =>  request.put(`${baseUrl}/pizza/${pizzaId}`, pizzaData)
 
 
-export const getOne = async (petId) => {
-    let response = await fetch(`${baseUrl}/pizza/${petId}`);
+export const getOne = async (pizzaId) => {
+    let response = await fetch(`${baseUrl}/pizza/${pizzaId}`);
     let result = await response.json();
     return result;
   };

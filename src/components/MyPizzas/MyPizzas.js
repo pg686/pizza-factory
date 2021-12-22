@@ -18,8 +18,8 @@ useEffect(() => {
 } , []);
 const pizzasSort = (pizzas) => {
     return {
-'descending likes' : () => pizzas.sort((a, b) => b.likes - a.likes),
-'ascending likes'  : () => pizzas.sort((a, b) =>  a.likes - b.likes),
+'descending products' : () => pizzas.sort((a, b) => b.numberOfProducts - a.numberOfProducts),
+'ascending products'  : () => pizzas.sort((a, b) =>  a.numberOfProducts - b.numberOfProducts),
 'descending price' : () => pizzas.sort((a, b) => b.price - a.price),
 'ascending price'  : () => pizzas.sort((a, b) => a.price - b.price),
     }
@@ -37,7 +37,7 @@ const onSortButton = (e) => {
             <PizzaList pizzas={myPizzas} onSort={onSortButton}/>
            
         
-            <p className="no-pets">No pets in database!</p>
+          
         </section>
     );
 };

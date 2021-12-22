@@ -4,12 +4,16 @@ import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import usePizzaProducts from '../../hooks/usePizzaProducts.js';
+import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
+import { validatePizza } from '../../HelperValidate/validate.js';
+import { Form } from 'react-bootstrap';
+
 const Edit = () => {
 const {pizzaId} = useParams();
-
+const [errors, setErrors] = useState({});
 const [pizza,setPizza] = usePizzaState(pizzaId);
 const [product, setProduct] =  usePizzaProducts(pizzaId);
-
+const { addNotification } = useNotificationContext();
 
 const navigate = useNavigate();
 
@@ -21,6 +25,16 @@ const pizzaEditSubmitHandler = (e) => {
                 let name = formData.get('name');
                 
                 let imageUrl = formData.get('imageUrl');
+                let  numberOfProducts = product.filter(el=> el.isChecked=== true).length;
+                const validationErrors = validatePizza(
+                    name,
+                    imageUrl,
+                    numberOfProducts
+                );
+                if (Object.keys(validationErrors).length > 0) {
+                    setErrors(validationErrors);
+                    return;
+                }
                 //let type = pizza.type;    
                 pizzaService.update(pizzaId,{
                     name,
@@ -28,10 +42,12 @@ const pizzaEditSubmitHandler = (e) => {
                     imageUrl,
                     type: pizza.type,
                     price: pizza.price,
-                    product: pizza.product
+                    product: pizza.product,
+                    numberOfProducts
+
                     
                 }).then(res => {
-       
+                    addNotification("success", types.success)
                     navigate('/dashboard');
                 } );
             };
@@ -88,13 +104,16 @@ console.log(pizza.description)
         <section id="edit-page" className="edit">
         <form id="edit-form" onSubmit={pizzaEditSubmitHandler}>
             <fieldset>
-                <legend>Edit my Pet</legend>
+                <legend>Edit my Pizza</legend>
                 <p className="field">
                     <label htmlFor="name">Name</label>
                     <span className="input">
                         <input type="text" name="name" id="name" placeholder="Name" defaultValue={pizza.name}/>
                     </span>
                 </p>
+                {errors.name && (
+						<span className="form-error">{errors.name}</span>
+					)}
                 <p className="field">
                     <label htmlFor="description">Description</label>
                     <p>{pizza.description}</p>
@@ -106,14 +125,16 @@ console.log(pizza.description)
                         <input type="text" name="imageUrl" id="image" placeholder="Image" defaultValue={pizza.imageUrl}/>
                     </span>
                 </p>
-        
+                {errors.imageUrl && (
+						<span className="form-error">{errors.imageUrl}</span>
+					)}
 
-    <div>
-        <label >
-    {Object.values(product).map(c => <p><input type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
-     </label>
-    </div>
-
+<Form.Group className="mb-3" controlId="formBasicCheckbox">
+  { Object.values(product).map(c => <p><Form.Check type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
+  </Form.Group>
+    {errors.numberOfProducts && (
+						<span className="form-error">{errors.numberOfProducts}</span>
+					)}
 
 <p className="field">
 

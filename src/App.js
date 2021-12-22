@@ -14,6 +14,8 @@ import useLocalStorage from './hooks/useLocalStorage.js';
 import Edit from './components/Edit/Edit.js';
 import {NotificationProvider} from './contexts/NotificationContext.js';
 import Notificication from "./components/Shared/Notification.js";
+
+
 function App() {
 
 
@@ -46,7 +48,7 @@ function App() {
 
 
         <footer id="site-footer">
-            <p>@PetMyPet</p>
+            <p>Pizza Factory</p>
         </footer>
 
     </div>
