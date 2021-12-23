@@ -14,7 +14,7 @@ const login   = (authData) => {
     setUser(initialAuthState);
       };
 return (
-    <AuthContext.Provider value={{user, login, logout}}>
+    <AuthContext.Provider value={{user, login, logout, isAuthenticated: user.email}}>
         {children}
     </AuthContext.Provider>
 )

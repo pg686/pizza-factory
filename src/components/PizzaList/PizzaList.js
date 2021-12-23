@@ -39,7 +39,7 @@ const onClick = (e) => {
 
 </ButtonGroup>
             { pizzas.length > 0 ? (
-        <ul className="other-pets-list">
+        <ul className="other-pizza-list">
 { (state !== 'All' &&  pizzas.filter(x => x.type === state).length > 0) ?   
 pizzas.filter(x => x.type === state).map( x =>  <PizzaCard key={x._id} getPizza={x} /> ) 
 : state !== 'All' && pizzas.filter(x => x.type === state).length === 0  ?   <div>

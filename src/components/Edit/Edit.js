@@ -104,7 +104,7 @@ console.log(pizza.description)
         <section  className="wrapper">
         <form id="edit-form" onSubmit={pizzaEditSubmitHandler}>
             <fieldset>
-                <legend>Edit my Pizza</legend>
+            <h3>Add new Pizza</h3>
                 <p className="field">
                     <label htmlFor="name">Name</label>
                     <span className="input">

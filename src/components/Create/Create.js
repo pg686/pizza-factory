@@ -104,7 +104,7 @@ e.preventDefault();
             likes: []
             
         }, user.accessToken).then(res => {
-            addNotification("success", types.success)
+            addNotification("you have successfully create new pizza", types.success)
 navigate('/dashboard');
         } );
     };

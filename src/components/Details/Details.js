@@ -77,7 +77,7 @@ const userButton = <Button className="button"  onClick={likeButtonClick}  disabl
         <section id="details-page" className="details">
            <Card>
            <Card.Body>
-        <div className="pet-information">
+        <div className="pizza-information">
             <h3>Name: {pizza.name} </h3>
             <p className="type">Type: {pizza.type}</p>
             <p className="img"><img src={pizza.imageUrl}/></p>

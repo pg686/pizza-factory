@@ -15,6 +15,8 @@ import Edit from './components/Edit/Edit.js';
 import {NotificationProvider} from './contexts/NotificationContext.js';
 import Notificication from "./components/Shared/Notification.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PrivateRoute from './components/Shared/PrivateRoute.js';
+import GuardedRoute from './components/Shared/PrivateRoute.js';
 
 function App() {
 
@@ -27,20 +29,24 @@ function App() {
 <Header />
     <Notificication />
         <main id="site-content">
-        <Routes>
+ <Routes>
 <Route path="/dashboard/*" element={<Dashboard />} />
 <Route path="/login" element={<Login/>} />
 <Route path="/register" element={<Register />} />
-<Route path="/my-pizzas" element={<MyPizzas />} />
-<Route path="/create" element={<Create />} />
-<Route path="/details/:pizzaId" element={<Details />} />
+<Route path="/my-pizzas" element={<PrivateRoute><MyPizzas /></PrivateRoute>} />
+
+<Route path="/details/:pizzaId" element={<PrivateRoute><Details /></PrivateRoute>} />
 <Route path="logout" element={<Logout />} />
-<Route path="edit/:pizzaId" element={<Edit />} />
+
+
+
+<Route path="/create" element={<PrivateRoute><Create /></PrivateRoute>} />
+<Route path="edit/:pizzaId" element={<PrivateRoute><Edit /></PrivateRoute>} />
 
 </Routes>          
           
           
-          
+
           
   </main>   
 

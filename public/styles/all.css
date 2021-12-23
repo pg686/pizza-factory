@@ -86,32 +86,32 @@ img {
     padding-top: 100%;
 }
 
-.detailsOtherPet,
-.detailsMyPet,
-.deletePet,
-.otherPet,
-.myPet {
+.detailsOtherPizza,
+.detailsMyPizza,
+.deletePizza,
+.otherPizza,
+.myPizza {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.detailsMyPet>p:nth-child(2),
-.deletePet>p:nth-child(2),
-.otherPet>p:nth-child(2),
-.myPet>p:nth-child(2) {
+.detailsMyPizza>p:nth-child(2),
+.deletePizza>p:nth-child(2),
+.otherPizza>p:nth-child(2),
+.myPizza>p:nth-child(2) {
     font-size: 1.2rem;
     font-weight: bold;
 }
 
 
 .basic h1,
-.my-pets h1,
+.my-pizza h1,
 .dashboard h1 {
     text-align: center;
     margin: 0rem;
-    padding: 2rem 0 1rem 0;
-    color: rgb(129, 9, 9);
+    padding: 1rem 0 1rem 0;
+    color: rgb(199, 163, 163);
 }
 
 h3 {
@@ -143,15 +143,15 @@ div.actions a {
     height: 25px;
 }
 
-.deletePet>form,
-.detailsMyPet>form {
+.deletePizza>form,
+.detailsMyPizza>form {
     display: flex;
     flex-direction: column;
     padding-bottom: 1rem;
 }
 
-.my-pets .my-pets-list,
-.dashboard .other-pets-list {
+.my-pizza .my-pizza-list,
+.dashboard .other-pizza-list {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
@@ -159,8 +159,8 @@ div.actions a {
     flex-wrap: wrap;
 }
 
-.detailsMyPet textarea,
-.my-pets textarea {
+.detailsMyPizza textarea,
+.my-pizza textarea {
     margin-bottom: 2rem;
 }
 
@@ -187,7 +187,7 @@ textarea#description {
     height: 100px;
     resize: none;
 }
-.otherPet {
+.otherPizza {
     align-items: inherit;
     width: 24%;
     margin-bottom: 15px;
