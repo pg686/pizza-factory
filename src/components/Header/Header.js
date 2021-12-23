@@ -21,7 +21,7 @@ const Header = ({
 </div> );
 
 let userNavigation = (<div id="user">
-<span>Welcome, {user.email}</span>
+
 <Nav.Item as="li">
 <Nav.Link  as={Link} to="/my-pizzas">My Pizzas</Nav.Link>
 </Nav.Item>
@@ -42,9 +42,9 @@ let userNavigation = (<div id="user">
         <Navbar bg="light" variant="light">
     <Container>
     <Navbar.Brand href="#home"><Nav.Link as={Link}  to="/dashboard">Dashboard</Nav.Link></Navbar.Brand>
-    
+
     <Nav className="ml-auto" as="ul">
-      
+  <Navbar.Brand>Welcome to Pizza Factory, {user.email}</Navbar.Brand>
       {    user.email ? userNavigation : guestNavigation   }   
      
     </Nav>

@@ -47,7 +47,7 @@ const pizzaEditSubmitHandler = (e) => {
 
                     
                 }).then(res => {
-                    addNotification("success", types.success)
+                    addNotification(`You successfully edited ${name}`, types.success)
                     navigate('/dashboard');
                 } );
             };
