@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+Project Description
+Users can create their own pizzas, by selecting the prefered products.In Dashboard and My Pizzas users are able to filter the type of pizzas they prefer (vegetarian, vegan or meat) and sort them by price and number of products by descending or ascennding order. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Pages:
 
-In the project directory, you can run:
+Dashboard -shows recent Pizzas, visible for Guest and Registered Users;
 
-### `npm start`
+Details - visible for Registered users, details page contains price, products, image, number of likes,.
+  -Edit and Delete buttons - visible only for those who created the pizza,Like button - visible for User, who's not the creator of the pizza;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Register - visible for Guests, in order to register you need to enter a valid email, password and confirm password;
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Login - visible for Guests and requires a valid email and password;
 
-### `npm test`
+Make your own pizza - visible for Registered users;
+Name - required;
+imageUrl - required;
+Ingredients - there are checkboxes for the products you want to add to your pizza - you must select at least 1 product;
+Type of pizza - depends on the selected products;
+Pizza price - recalculates the price of your pizza when you add or remove products;
+Description - is changing when you add or remove products;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+Edit - visible for the creator of the pizza;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Delete Pizza - visible for the creator of the pizza; 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+My Pizzas - users can see the pizzas they created;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+How to start
+Run the server and Start the app by using npm start Open http://localhost:3000 to view it in the browser.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The server
+Appication is using sofuni-practice-server as a backend.
