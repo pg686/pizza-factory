@@ -1,0 +1,5 @@
+.desc{
+    height: 100px;
+    resize: none;
+   overflow-wrap: break-word;
+}

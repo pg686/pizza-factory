@@ -7,7 +7,7 @@ import usePizzaProducts from '../../hooks/usePizzaProducts.js';
 import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
 import { validatePizza } from '../../HelperValidate/validate.js';
 import { Form } from 'react-bootstrap';
-
+import './Edit.css';
 const Edit = () => {
 const {pizzaId} = useParams();
 const [errors, setErrors] = useState({});
@@ -101,7 +101,7 @@ console.log(pizza.description)
     }
     
     return (
-        <section id="edit-page" className="edit">
+        <section  className="wrapper">
         <form id="edit-form" onSubmit={pizzaEditSubmitHandler}>
             <fieldset>
                 <legend>Edit my Pizza</legend>
@@ -110,10 +110,11 @@ console.log(pizza.description)
                     <span className="input">
                         <input type="text" name="name" id="name" placeholder="Name" defaultValue={pizza.name}/>
                     </span>
-                </p>
-                {errors.name && (
+                    {errors.name && (
 						<span className="form-error">{errors.name}</span>
 					)}
+                </p>
+
                 <p className="field">
                     <label htmlFor="description">Description</label>
                     <p>{pizza.description}</p>
@@ -124,10 +125,11 @@ console.log(pizza.description)
                     <span className="input">
                         <input type="text" name="imageUrl" id="image" placeholder="Image" defaultValue={pizza.imageUrl}/>
                     </span>
-                </p>
-                {errors.imageUrl && (
+                    {errors.imageUrl && (
 						<span className="form-error">{errors.imageUrl}</span>
 					)}
+                </p>
+
 
 <Form.Group className="mb-3" controlId="formBasicCheckbox">
   { Object.values(product).map(c => <p><Form.Check type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}

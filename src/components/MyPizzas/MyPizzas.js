@@ -2,6 +2,7 @@ import PizzaList from "../PizzaList/PizzaList.js";
 import * as pizzaService from '../../services/pizzaService.js';
 import { useState,useEffect } from "react";
 import { useAuthContext } from "../../contexts/AuthContext.js";
+
 const MyPizzas = () => {
 
 const [myPizzas,setMyPizzas] = useState([]);
@@ -32,7 +33,7 @@ const onSortButton = (e) => {
     
 }
     return (
-        <section id="my-orders-page" className="my-orders">
+        <section id="dashboard-page" className="dashboard">
             <h1>My Pizzas</h1>
             <PizzaList pizzas={myPizzas} onSort={onSortButton}/>
            

@@ -3,35 +3,54 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import { useAuthContext } from '../../contexts/AuthContext.js';
 //import CartContext from '../../contexts/card/CardContext.js';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import './Header.css';
+
 const Header = ({
    email
 }) => {
     const { user } = useAuthContext();
    
     let guestNavigation = ( <div id="guest">
-    <Link className="button" to="/login">Login</Link>
-    <Link className="button" to="/register">Register</Link>
+        <Nav.Item as="li">
+    <Nav.Link   as={Link} to="/login">Login</Nav.Link>
+    </Nav.Item>
+    <Nav.Item as="li">
+    <Nav.Link   as={Link} to="/register">Register</Nav.Link>
+    </Nav.Item>
 </div> );
 
 let userNavigation = (<div id="user">
 <span>Welcome, {user.email}</span>
-<Link className="button" to="/my-pizzas">My Pizzas</Link>
-<Link className="button" to="/create">Make your own pizza</Link>
-<Link className="button" to="/logout">Logout</Link>
+<Nav.Item as="li">
+<Nav.Link  as={Link} to="/my-pizzas">My Pizzas</Nav.Link>
+</Nav.Item>
+<Nav.Item as="li">
+<Nav.Link  as={Link} to="/create">Make your own pizza</Nav.Link>
+</Nav.Item>
+<Nav.Item as="li">
+<Nav.Link  as={Link} to="/logout">Logout</Nav.Link>
+</Nav.Item>
 </div>
 );
 
     return (
-        <header id="site-header">
-
-        <nav className="navbar">
-            <section className="navbar-dashboard">
-                <Link to="/dashboard">Dashboard</Link>
-            {    user.email ? userNavigation : guestNavigation   }   
+        <header id="site-header"  >
 
 
-            </section>
-        </nav>
+
+        <Navbar bg="light" variant="light">
+    <Container>
+    <Navbar.Brand href="#home"><Nav.Link as={Link}  to="/dashboard">Dashboard</Nav.Link></Navbar.Brand>
+    
+    <Nav className="ml-auto" as="ul">
+      
+      {    user.email ? userNavigation : guestNavigation   }   
+     
+    </Nav>
+    </Container>
+  </Navbar>
+
     </header>
 
     );

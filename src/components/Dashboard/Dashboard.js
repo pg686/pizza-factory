@@ -37,7 +37,7 @@ const [idLikes , setIdLikes] = useState([]);
     }
     return (
         <section id="dashboard-page" className="dashboard">
-        <h1>Dashboard</h1>
+        <h1>Pizza Factory</h1>
 
       
           <PizzaList pizzas={pizza} onSort={onSortButton}/>

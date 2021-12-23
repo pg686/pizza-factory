@@ -14,7 +14,7 @@ import useLocalStorage from './hooks/useLocalStorage.js';
 import Edit from './components/Edit/Edit.js';
 import {NotificationProvider} from './contexts/NotificationContext.js';
 import Notificication from "./components/Shared/Notification.js";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 

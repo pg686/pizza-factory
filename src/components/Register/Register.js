@@ -30,34 +30,38 @@ const Register = () => {
         <section id="register-page" className="register">
         <form id="register-form" onSubmit={registerSubmitHandler}>
             <fieldset>
-                <legend>Register Form</legend>
+                <span>Register Form</span>
                 <p className="field">
                     <label htmlFor="email">Email</label>
                     <span className="input">
                         <input type="text" name="email" id="email" placeholder="Email"/>
+                        
                     </span>
-                </p>
-                {errors.email && (
+                    {errors.email && (
 						<span className="form-error">{errors.email}</span>
 					)}
+                </p>
+                
                 <p className="field">
                     <label htmlFor="password">Password</label>
                     <span className="input">
                         <input type="password" name="password" id="password" placeholder="Password"/>
                     </span>
-                </p>
-                {errors.password && (
+                    {errors.password && (
 						<span className="form-error">{errors.password}</span>
 					)}
+                </p>
+            
                 <p className="field">
                     <label htmlFor="repeat-pass">Repeat Password</label>
                     <span className="input">
                         <input type="password" name="confirmPassword" id="repeat-pass" placeholder="Repeat Password"/>
                     </span>
-                </p>
-                {errors.confirmPassword && (
+                    {errors.confirmPassword && (
 						<span className="form-error">{errors.confirmPassword}</span>
 					)}
+                </p>
+               
                 <input className="button submit" type="submit" value="Register"/>
             </fieldset>
         </form>

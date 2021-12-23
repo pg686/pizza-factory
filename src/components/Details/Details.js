@@ -8,6 +8,8 @@ import ModalDialog from "../Shared/Modal/ModalDialog.js";
 import * as likeService from '../../services/likeService';
 import { Button } from "react-bootstrap";
 import { useNotificationContext,types } from '../../contexts/NotificationContext.js';
+import { Card } from "react-bootstrap";
+import "./Details.css";
 const Details = () => {
     const navigate = useNavigate();
     const { user }  =useAuthContext();
@@ -73,11 +75,14 @@ const userButton = <Button className="button"  onClick={likeButtonClick}  disabl
         <>
         <ModalDialog show={showDel} onClose={() => setShowDel(false)} onSave={deleteHandler} ></ModalDialog>
         <section id="details-page" className="details">
+           <Card>
+           <Card.Body>
         <div className="pet-information">
             <h3>Name: {pizza.name} </h3>
             <p className="type">Type: {pizza.type}</p>
             <p className="img"><img src={pizza.imageUrl}/></p>
-            <div className="actions">
+        
+          
                 {user._id && (user._id === pizza._ownerId ? ownerButtons
                 : userButton )}
 
@@ -92,15 +97,20 @@ const userButton = <Button className="button"  onClick={likeButtonClick}  disabl
                     <span id="total-likes">Likes: {pizza.likes?.length}</span>
                 </div>
                 <div className="price">
-                    <img className="like" src="/images/price.png" />
+                    <img className="price" src="/images/price.png" />
                     <span id="total-likes">Price: {pizza.price} </span>
                 </div>
-            </div>
+           
         </div>
-        <div className="pet-description">
-            <h3>Description:</h3>
-            <p>{pizza.description}</p>
-        </div>
+        <Card.Text>
+        <h4 >Description:</h4>
+
+        {pizza.description}
+    </Card.Text>
+          
+  
+        </Card.Body>
+        </Card> 
     </section>
     </>
     );

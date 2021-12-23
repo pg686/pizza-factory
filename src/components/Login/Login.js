@@ -35,7 +35,7 @@ const navigate = useNavigate();
         <section id="login-page" className="login">
         <form id="login-form" onSubmit={onLoginHandler}>
             <fieldset>
-                <legend>Login Form</legend>
+                <h3>Login Form</h3>
                 <p className="field">
                     <label htmlFor="email">Email</label>
                     
@@ -43,10 +43,11 @@ const navigate = useNavigate();
 
                         <input type="text" name="email" id="email" placeholder="Email" />
                     </span>
-                </p>
-                {errors.email && (
+                    {errors.email && (
 						<span className="form-error">{errors.email}</span>
 					)}
+                </p>
+               
                 <p className="field">
                     <label htmlFor="password">Password</label>
                     <span className="input">
@@ -54,11 +55,11 @@ const navigate = useNavigate();
                         <input type="password" name="password" id="password" placeholder="Password"/>
                         
                     </span>
-                
-                </p>
-                {errors.password && (
+                    {errors.password && (
 						<p className="form-error">{errors.password}</p>
 					)}
+                </p>
+              
                 <input className="button submit" type="submit" value="Login"/>
             </fieldset>
         </form>

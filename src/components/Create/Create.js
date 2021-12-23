@@ -112,16 +112,17 @@ navigate('/dashboard');
 <section  className="wrapper">
 <form onSubmit={onPizzaCreate}>
     <fieldset>
-        <legend>Add new Pizza</legend>
+        <h3>Add new Pizza</h3>
         <p className="field">
             <label htmlFor="name">Name</label>
             <span className="input">
                 <input type="text" name="name" id="name" placeholder="Name"/>
             </span>
-        </p>
-        {errors.name && (
+            {errors.name && (
                 <span className="form-error">{errors.name}</span>
             )}
+        </p>
+     
         <p className="field">
             <label htmlFor="description">Description</label>
             <p>{description}</p>
@@ -132,10 +133,11 @@ navigate('/dashboard');
             <span className="input">
                 <input type="text" name="imageUrl" id="image" placeholder="Image"/>
             </span>
-        </p>
-        {errors.imageUrl && (
+            {errors.imageUrl && (
                 <span className="form-error">{errors.imageUrl}</span>
             )}
+        </p>
+
            
        <Form.Group className="mb-3 actions" controlId="formBasicCheckbox">
   { Object.values(product).map(c => <p><Form.Check type="checkbox" value={c.name} key={c} onChange={ onProductChange} name= {c.name} checked={c.isChecked}/><span>{c.name}</span></p>)}
